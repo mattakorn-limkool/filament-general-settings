@@ -2,7 +2,7 @@
 
 namespace Joaopaulolndev\FilamentGeneralSettings\Forms;
 
-use Filament\Forms\Components\KeyValue;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\ViewField;
 use Filament\Schemas\Components\Flex;
@@ -23,8 +23,23 @@ class SeoFieldsForm
                     TextInput::make('seo_keywords')
                         ->label(__('filament-general-settings::default.seo_keywords'))
                         ->helperText(__('filament-general-settings::default.seo_keywords_helper_text')),
-                    KeyValue::make('seo_metadata')
-                        ->label(__('filament-general-settings::default.seo_metadata')),
+                    Repeater::make('seo_metadata')
+                        ->label(__('filament-general-settings::default.seo_metadata'))
+                        ->schema([
+                            TextInput::make('key')
+                                ->label('Key')
+                                ->required()
+                                ->columnSpan(1),
+                            TextInput::make('value')
+                                ->label('Value')
+                                ->required()
+                                ->columnSpan(1),
+                        ])
+                        ->columns(2)
+                        ->default([])
+                        ->collapsible()
+                        ->collapsed()
+                        ->addActionLabel('Add Meta Tag'),
                 ]),
                 Section::make([
                     ViewField::make('seo_preview')

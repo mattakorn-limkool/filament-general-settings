@@ -95,13 +95,54 @@ class GeneralSettingsPage extends Page
 
     public function mount(): void
     {
-        $this->data = GeneralSetting::first()?->toArray() ?: [];
+        $setting = GeneralSetting::first();
+        
+        if ($setting) {
+            // Use the model's toArray() which respects casts
+            $this->data = $setting->toArray();
+            
+            // Force seo_metadata to be array using the model's attribute
+            if (isset($setting->seo_metadata)) {
+                $seoMetadata = $setting->seo_metadata;
+                // Ensure it's an array, not a string
+                if (is_string($seoMetadata)) {
+                    $seoMetadata = json_decode($seoMetadata, true);
+                }
+                $this->data['seo_metadata'] = is_array($seoMetadata) ? $seoMetadata : [];
+            } else {
+                $this->data['seo_metadata'] = [];
+            }
+        } else {
+            $this->data = [];
+            $this->data['seo_metadata'] = [];
+        }
 
         $this->data['seo_description'] = $this->data['seo_description'] ?? '';
         $this->data['seo_preview'] = $this->data['seo_preview'] ?? '';
         $this->data['theme_color'] = $this->data['theme_color'] ?? '';
-        $this->data['seo_metadata'] = $this->data['seo_metadata'] ?? [];
+        
+        // Convert seo_metadata from key-value object to repeater format
+        if (!isset($this->data['seo_metadata']) || !is_array($this->data['seo_metadata'])) {
+            $this->data['seo_metadata'] = [];
+        } else {
+            // Check if it's key-value format and convert to repeater format
+            $seoMetadata = $this->data['seo_metadata'];
+            if (!empty($seoMetadata) && isset(array_values($seoMetadata)[0]) && !isset(array_values($seoMetadata)[0]['key'])) {
+                // It's a key-value object, convert to array of objects
+                $repeaterFormat = [];
+                foreach ($seoMetadata as $key => $value) {
+                    $repeaterFormat[] = ['key' => $key, 'value' => $value];
+                }
+                $this->data['seo_metadata'] = $repeaterFormat;
+            }
+        }
+        
         $this->data = EmailDataHelper::getEmailConfigFromDatabase($this->data);
+        
+        // Re-ensure seo_metadata is array after EmailDataHelper
+        if (!is_array($this->data['seo_metadata'])) {
+            $this->data['seo_metadata'] = [];
+        }
 
         if (isset($this->data['site_logo']) && is_string($this->data['site_logo'])) {
             $this->data['site_logo'] = [
@@ -195,6 +236,20 @@ class GeneralSettingsPage extends Page
         if (config('filament-general-settings.show_email_tab')) {
             $data = EmailDataHelper::setEmailConfigToDatabase($data);
         }
+        
+        // Convert seo_metadata from repeater format back to key-value object
+        if (isset($data['seo_metadata']) && is_array($data['seo_metadata'])) {
+            $keyValueFormat = [];
+            foreach ($data['seo_metadata'] as $item) {
+                if (is_array($item) && isset($item['key']) && isset($item['value'])) {
+                    $keyValueFormat[$item['key']] = $item['value'];
+                }
+            }
+            $data['seo_metadata'] = $keyValueFormat;
+        } else {
+            $data['seo_metadata'] = [];
+        }
+        
         $data = $this->clearVariables($data);
 
         GeneralSetting::updateOrCreate([], $data);
