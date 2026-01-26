@@ -21,7 +21,9 @@ Create really fast and easily general settings for your Laravel Filament project
 - **Analytics:** Add your Google Analytics tracking code to your system.
 - **SEO Meta:** Manage your SEO meta tags, such as title, description, and keywords.
 - **Email:** Manage your email settings, such as SMTP server, port, and credentials.
-- **Social Media Network:** Manage your social media network links, such as Facebook, Twitter, and Instagram.
+- **Social Media Network:** Manage your social media network links, such as Facebook, Twitter, Instagram, and LINE.
+- **Logo & Favicon:** Upload and manage your site logo and favicon with image editor support.
+- **Multi-language Support:** Available in English, Arabic, Spanish, French, Dutch, Portuguese, Portuguese (Brazil), and Thai.
 - **Support**: [Laravel 11](https://laravel.com) and [Filament 5.x](https://filamentphp.com)
 
 ## Compatibility
@@ -183,7 +185,11 @@ use Joaopaulolndev\FilamentGeneralSettings\FilamentGeneralSettingsPlugin;
     FilamentGeneralSettingsPlugin::make()
 ])
 ```
-if you want to show for specific parameters to sort, icon, title, navigation group, navigation label and can access, you can use the following example:
+
+### Basic Configuration
+
+If you want to show for specific parameters to sort, icon, title, navigation group, navigation label and can access, you can use the following example:
+
 ```php
 ->plugins([
     FilamentGeneralSettingsPlugin::make()
@@ -195,6 +201,38 @@ if you want to show for specific parameters to sort, icon, title, navigation gro
         ->setNavigationLabel('General Settings'),
     ])
 ```
+
+### Permission-Based Access Control (with laravel-permission)
+
+You can integrate with `laravel-permission` to control access using roles and permissions:
+
+```php
+->plugins([
+    FilamentGeneralSettingsPlugin::make()
+        ->permission('View:GeneralSettingsPage')  // Requires the user to have this permission
+        ->setSort(3)
+        ->setIcon('heroicon-o-cog')
+        ->setNavigationGroup('Settings'),
+    ])
+```
+
+To use this feature with **filament-shield** + **laravel-permission**:
+
+1. Ensure you have both packages installed in your main application:
+```bash
+composer require spatie/laravel-permission
+composer require bezhansalleh/filament-shield
+```
+
+2. Create the permission in your application:
+```bash
+php artisan shield:generate
+```
+
+3. Configure the plugin with the permission name and the `canAccess()` method will automatically check it.
+
+**Note:** The `permission()` method is optional and only works when `laravel-permission` is installed in your main application. The plugin itself does not require it as a dependency.
+
 
 ## Testing
 

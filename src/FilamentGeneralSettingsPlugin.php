@@ -15,6 +15,8 @@ class FilamentGeneralSettingsPlugin implements Plugin
 
     public Closure | bool $access = true;
 
+    public ?string $permission = null;
+
     public Closure | int $sort = 100;
 
     public Closure | string $icon = '';
@@ -85,6 +87,18 @@ class FilamentGeneralSettingsPlugin implements Plugin
     public function getCanAccess(): bool
     {
         return $this->evaluate($this->access);
+    }
+
+    public function permission(string $permission): static
+    {
+        $this->permission = $permission;
+
+        return $this;
+    }
+
+    public function getPermission(): ?string
+    {
+        return $this->permission;
     }
 
     public function setIcon(Closure | string $value = ''): static

@@ -64,7 +64,17 @@ class GeneralSettingsPage extends Page
     {
         $plugin = Filament::getCurrentOrDefaultPanel()?->getPlugin('filament-general-settings');
 
-        return $plugin->getCanAccess();
+        // Check plugin access first
+        if (!$plugin->getCanAccess()) {
+            return false;
+        }
+
+        // If permission is set, check with laravel-permission
+        if ($permission = $plugin->getPermission()) {
+            return auth()->check() && auth()->user()->can($permission);
+        }
+
+        return true;
     }
 
     public function getTitle(): string
