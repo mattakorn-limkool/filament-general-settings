@@ -7,13 +7,13 @@ use Joaopaulolndev\FilamentGeneralSettings\Traits\WithOptions;
 enum SocialNetworkEnum: string
 {
     use WithOptions;
-
-    case WHATSAPP = 'whatsapp';
+    case LINE = 'line';
+    case TIKTOK = 'tiktok';
     case FACEBOOK = 'facebook';
     case INSTAGRAM = 'instagram';
-    case TWITTER = 'x_twitter';
     case YOUTUBE = 'youtube';
+    case TWITTER = 'x_twitter';
+    case WHATSAPP = 'whatsapp';
     case LINKEDIN = 'linkedin';
-    case TIKTOK = 'tiktok';
     case PINTEREST = 'pinterest';
 }

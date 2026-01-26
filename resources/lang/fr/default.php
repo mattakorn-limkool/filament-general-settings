@@ -14,6 +14,7 @@ return [
     'support_email' => 'Support Technique',
     'support_phone' => 'Support Téléphonique',
     'theme_color' => 'Couleur du Thème',
+    'line' => 'LINE',
     'theme_color_helper_text' => 'Cette couleur sera utilisée comme couleur primaire par défaut, laissez-la vide.',
     'default_email_provider' => 'Fournisseur de messagerie par défaut',
     'default_email_provider_helper_text' => "Il s'agit du fournisseur de messagerie qui sera utilisé pour tous les e-mails.",

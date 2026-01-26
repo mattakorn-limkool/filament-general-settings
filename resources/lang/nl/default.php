@@ -14,6 +14,7 @@ return [
     'support_email' => 'Support E-mail',
     'support_phone' => 'Support Telefoon',
     'theme_color' => 'Themakleur',
+    'line' => 'LINE',
     'theme_color_helper_text' => 'Deze kleur zal worden gebruikt als de primaire standaardkleur, laat leeg om geen kleur in te stellen.',
     'default_email_provider' => 'Standaard E-mailprovider',
     'default_email_provider_helper_text' => 'Dit is de e-mailprovider die zal worden gebruikt voor alle e-mails.',

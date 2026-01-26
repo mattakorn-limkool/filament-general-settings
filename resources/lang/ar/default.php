@@ -14,6 +14,7 @@ return [
     'support_email' => 'البريد الإلكتروني للدعم',
     'support_phone' => 'رقم هاتف الدعم',
     'theme_color' => 'لون السمة',
+    'line' => 'لاين',
     'theme_color_helper_text' => 'سيتم استخدام هذا اللون كلون رئيسي افتراضي، اتركه فارغاً.',
     'default_email_provider' => 'مزود البريد الإلكتروني الافتراضي',
     'default_email_provider_helper_text' => 'هذا هو مزود البريد الإلكتروني الذي سيتم استخدامه لجميع الرسائل البريدية.',

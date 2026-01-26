@@ -14,6 +14,7 @@ return [
     'support_email' => 'Support Email',
     'support_phone' => 'Support Phone',
     'theme_color' => 'Theme Color',
+    'line' => 'LINE',
     'theme_color_helper_text' => 'This color will be used as the primary for default color, leave it empty.',
     'default_email_provider' => 'Default Email Provider',
     'default_email_provider_helper_text' => 'This is the email provider that will be used for all emails.',
