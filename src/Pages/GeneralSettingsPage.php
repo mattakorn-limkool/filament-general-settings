@@ -3,6 +3,7 @@
 namespace Joaopaulolndev\FilamentGeneralSettings\Pages;
 
 use Exception;
+use BackedEnum;
 use Filament\Actions\Action;
 use Filament\Facades\Filament;
 use Filament\Notifications\Notification;
@@ -46,7 +47,7 @@ class GeneralSettingsPage extends Page
     /**
      * @throws Exception
      */
-    public static function getNavigationIcon(): ?string
+    public static function getNavigationIcon(): string | BackedEnum | null
     {
         $plugin = Filament::getCurrentOrDefaultPanel()?->getPlugin('filament-general-settings');
 

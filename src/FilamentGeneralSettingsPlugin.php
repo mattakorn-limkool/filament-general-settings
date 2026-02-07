@@ -6,6 +6,7 @@ use Closure;
 use Filament\Contracts\Plugin;
 use Filament\Panel;
 use Filament\Support\Concerns\EvaluatesClosures;
+use BackedEnum;
 use Joaopaulolndev\FilamentGeneralSettings\Middleware\FilamentGeneralSettingsMiddleware;
 use Joaopaulolndev\FilamentGeneralSettings\Pages\GeneralSettingsPage;
 
@@ -19,7 +20,7 @@ class FilamentGeneralSettingsPlugin implements Plugin
 
     public Closure | int $sort = 100;
 
-    public Closure | string $icon = '';
+    public Closure | string | BackedEnum $icon = '';
 
     public Closure | string $navigationGroup = '';
 
@@ -101,14 +102,14 @@ class FilamentGeneralSettingsPlugin implements Plugin
         return $this->permission;
     }
 
-    public function setIcon(Closure | string $value = ''): static
+    public function setIcon(Closure | string | BackedEnum $value = ''): static
     {
         $this->icon = $value;
 
         return $this;
     }
 
-    public function getIcon(): ?string
+    public function getIcon(): string | BackedEnum | null
     {
         return ! empty($this->icon) ? $this->evaluate($this->icon) : null;
     }
